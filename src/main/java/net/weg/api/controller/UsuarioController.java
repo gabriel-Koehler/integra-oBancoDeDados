@@ -1,17 +1,19 @@
 package net.weg.api.controller;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import net.weg.api.model.Usuario;
 import net.weg.api.service.UsuarioService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
-
+@AllArgsConstructor
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
 
-    UsuarioService usuarioService;
+    private UsuarioService usuarioService;
 
     @GetMapping("/{id}")
     public Usuario buscar(@PathVariable Integer id){
@@ -30,11 +32,11 @@ public class UsuarioController {
 
     @PostMapping()
     public void inserir(@RequestBody Usuario usuario){
-        usuarioService.inserir(usuario);
+        usuarioService.salvar(usuario);
     }
 
     @PutMapping()
     public void atualizar(@RequestBody Usuario usuario){
-        usuarioService.atualizar(usuario);
+        usuarioService.salvar(usuario);
     }
 }

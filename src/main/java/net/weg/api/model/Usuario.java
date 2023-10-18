@@ -1,41 +1,36 @@
 package net.weg.api.model;
 
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Set;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+// identificar com entinty
+@Entity
+@Table(name="tb_usuarios")
 public class Usuario {
+    // identificar com id para o JPA mapear
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    @Column(name="username",unique = true,nullable = false)
     private String nome;
     private String senha;
     private Integer idade;
-    private Carro carro;
+    // primeiro  referencia sobre a classe manipulada
+    @OneToMany(cascade = CascadeType.PERSIST)
+    //
+    private Set<Carro> carro;
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    private Set<Endereco> endereco;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private Habilitacao habilitacao;
+    @ManyToOne
+    private Consorcio consorcio;
 
-    public Usuario(ResultSet resultSet) throws SQLException {
-        this.id = resultSet.getInt("id");
-        this.nome = resultSet.getString("nome");
-        this.senha = resultSet.getString("senha");
-        this.idade = resultSet.getInt("idade");
-        int id_carro=resultSet.getInt("id_carro");
-        if (id_carro!=0) {
-            this.carro = new Carro(resultSet.getInt("id_carro"));
-        }
-    }
-
-    public Usuario(String nome) {
-        this.nome = nome;
-    }
-
-    @Override
-    public String toString() {
-        return "\nUsuario{" +
-                "id=" + id +'\n'+
-                ", nome='" + nome + '\n' +
-                ", senha='" + senha + '\n' +
-                ", idade=" + idade +
-                '}';
-    }
 }

@@ -1,43 +1,33 @@
 package net.weg.api.service;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import net.weg.api.model.Carro;
-import net.weg.api.model.Usuario;
-import net.weg.api.repository.CarroDAD;
-import net.weg.api.repository.UsuarioDAD;
+import net.weg.api.repository.CarroRepository;
 import org.springframework.stereotype.Service;
 
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
+@AllArgsConstructor
 @Service
 public class CarroService {
-    private CarroDAD carroDAD;
+    private CarroRepository carroRepository;
 
-    public CarroService()  {
-        this.carroDAD = new CarroDAD();
-    }
-    public void inserir(Carro carro) {
-        try {
-            carroDAD.buscar(carro.getId());
-        } catch (NoSuchElementException e) {
-            carroDAD.inserir(carro);
-        }
+    public void salvar(Carro carro) {
+            carroRepository.save(carro);
     }
 
     public Carro buscar(Integer id) {
-        return carroDAD.buscar(id);
+        return carroRepository.findById(id).get();
     }
 
     public Collection<Carro> buscarTodos() {
-        return carroDAD.buscarTodos();
+        return carroRepository.findAll();
     }
 
     public void deletar(Integer id) {
-        carroDAD.deletar(id);
-    }
-
-    public void atualizar(Carro carro) {
-        carroDAD.atualizar(carro);
+        carroRepository.deleteById(id);
     }
 }

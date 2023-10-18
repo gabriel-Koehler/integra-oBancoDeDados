@@ -1,49 +1,39 @@
 package net.weg.api.service;
 
-import net.weg.api.model.Carro;
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import net.weg.api.model.Usuario;
-import net.weg.api.repository.CarroDAD;
-import net.weg.api.repository.UsuarioDAD;
+import net.weg.api.repository.UsuarioRespository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.NoSuchElementException;
+import java.util.Optional;
 
+
+@AllArgsConstructor
 @Service
 public class UsuarioService {
-    private UsuarioDAD usuarioDAD;
-    private CarroService carroService=new CarroService();
 
-    public UsuarioService(){
-        usuarioDAD=new UsuarioDAD();
-    }
+    private UsuarioRespository usuarioRepository;
 
-    public void inserir(Usuario usuario) {
-
-        try {
-            carroService.buscar(usuario.getCarro().getId());
-        } catch (NoSuchElementException e) {
-            carroService.inserir(usuario.getCarro());
-        }
-        usuarioDAD.inserir(usuario);
+    public void salvar(Usuario usuario) {
+        usuarioRepository.save(usuario);
     }
 
     public Usuario buscar(Integer id) {
-        return usuarioDAD.buscar(id);
+        Optional<Usuario> usuarioOptional= usuarioRepository.findById(id);
+        Usuario usuario=usuarioOptional.get();
+
+        return usuario;
     }
 
     public Collection<Usuario> buscarTodos() {
-        Collection<Usuario>usuarios=usuarioDAD.buscarTodos();
+        return usuarioRepository.findAll();
 
-        return usuarios;
     }
 
     public void deletar(Integer id) {
-        usuarioDAD.deletar(id);
+        usuarioRepository.deleteById(id);
     }
 
-    public void atualizar(Usuario usuario) {
-
-        usuarioDAD.atualizar(usuario);
-    }
 }

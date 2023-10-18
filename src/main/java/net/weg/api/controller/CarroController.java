@@ -1,15 +1,18 @@
 package net.weg.api.controller;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import net.weg.api.model.Carro;
 import net.weg.api.service.CarroService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-
+@AllArgsConstructor
 @RestController
 @RequestMapping("/carro")
 public class CarroController {
-    private CarroService carroService=new CarroService();
+
+    private CarroService carroService;
 
     @GetMapping("/{id}")
     public Carro buscar(@PathVariable Integer id){
@@ -28,11 +31,11 @@ public class CarroController {
 
     @PostMapping()
     public void inserir(@RequestBody Carro carro){
-        carroService.inserir(carro);
+        carroService.salvar(carro);
     }
 
     @PutMapping()
     public void atualizar(@RequestBody Carro carro){
-        carroService.atualizar(carro);
+        carroService.salvar(carro);
     }
 }
