@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Set;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -16,9 +18,11 @@ public class Carro {
     private Integer id;
     private String marca;
     private String cor;
-    @Column(unique = true)
     private String modelo;
     private Double preco;
     private Integer ano;
+    @OneToOne(mappedBy = "veiculo")
+    private Seguro seguro;
+
 
 }
