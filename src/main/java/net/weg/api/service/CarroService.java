@@ -7,19 +7,26 @@ import net.weg.api.repository.CarroRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.NoSuchElementException;
+import java.util.List;
 import java.util.Optional;
 
 @AllArgsConstructor
 @Service
 public class CarroService {
-    private CarroRepository carroRepository;
 
-    public void salvar(Carro carro) {
-            carroRepository.save(carro);
+
+    private final CarroRepository carroRepository;
+
+    public void salvar(Carro carro){
+        carroRepository.save(carro);
     }
 
-    public Carro buscar(Integer id) {
+    public void deletar(Integer id) {
+        carroRepository.deleteById(id);
+    }
+
+
+    public Carro buscarUm(Integer id) {
         return carroRepository.findById(id).get();
     }
 
@@ -27,7 +34,5 @@ public class CarroService {
         return carroRepository.findAll();
     }
 
-    public void deletar(Integer id) {
-        carroRepository.deleteById(id);
-    }
+    public List<Carro> buscarModelo(String modelo){ return carroRepository.findByModelo(modelo);}
 }

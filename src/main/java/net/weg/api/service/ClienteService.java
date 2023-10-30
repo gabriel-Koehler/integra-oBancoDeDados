@@ -2,35 +2,37 @@ package net.weg.api.service;
 
 import lombok.AllArgsConstructor;
 import net.weg.api.model.Cliente;
-import net.weg.api.repository.ClienteRespository;
+
+import net.weg.api.repository.ClienteRepository;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.Optional;
 
+import java.util.Optional;
 
 @AllArgsConstructor
 @Service
 public class ClienteService {
 
-    private ClienteRespository clienteRepository;
+    private final ClienteRepository usuarioRepository;
 
-    public void salvar(Cliente cliente) {
-        clienteRepository.save(cliente);
-    }
+    public void salvar(Cliente cliente){
 
-    public Cliente buscar(Integer id) {
-        Optional<Cliente> usuarioOptional= clienteRepository.findById(id);
-        return usuarioOptional.get();
-    }
-
-    public Collection<Cliente> buscarTodos() {
-        return clienteRepository.findAll();
-
+        usuarioRepository.save(cliente);
     }
 
     public void deletar(Integer id) {
-        clienteRepository.deleteById(id);
+        usuarioRepository.deleteById(id);
     }
 
+    public Cliente buscarUm(Integer id) {
+        Optional <Cliente> usuarioOptional= usuarioRepository.findById(id);
+        Cliente cliente= usuarioOptional.get();
+        return cliente;
+    }
+
+    public Collection<Cliente> buscarTodos() {
+        return usuarioRepository.findAll();
+    }
 }

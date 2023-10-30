@@ -6,20 +6,19 @@ import net.weg.api.service.ClienteService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-
 @AllArgsConstructor
 @RestController
-@RequestMapping("/cliente")
+@RequestMapping("/usuario")
 public class ClienteController {
 
-    private ClienteService clienteService;
+    private final ClienteService clienteService;
 
     @GetMapping("/{id}")
-    public Cliente buscar(@PathVariable Integer id){
-        return clienteService.buscar(id);
+    public Cliente buscarUsuario(@PathVariable Integer id){
+        return clienteService.buscarUm(id);
     }
 
-    @GetMapping()
+    @GetMapping
     public Collection<Cliente> buscarTodos(){
         return clienteService.buscarTodos();
     }
@@ -29,13 +28,14 @@ public class ClienteController {
         clienteService.deletar(id);
     }
 
-    @PostMapping()
+    @PostMapping
     public void inserir(@RequestBody Cliente cliente){
         clienteService.salvar(cliente);
     }
 
-    @PutMapping()
-    public void atualizar(@RequestBody Cliente cliente){
-        clienteService.salvar(cliente);
+    @PutMapping
+    public void atualizar(@RequestBody Cliente clienteAtualizado){
+        clienteService.salvar(clienteAtualizado);
     }
+
 }

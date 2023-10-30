@@ -1,15 +1,18 @@
 package net.weg.api.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_funcionario")
-
-public class Funcionario extends Usuario{
+@Entity
+public class Funcionario extends Usuario {
 
     private Double salario;
     private Integer matricula;

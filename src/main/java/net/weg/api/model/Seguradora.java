@@ -1,5 +1,6 @@
 package net.weg.api.model;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,24 +9,23 @@ import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
-@Entity
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
-@Table(name = "tb_seguradora")
-
+@NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class Seguradora {
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private  Integer id;
-    private Long cpnj;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private Long CNPJ;
     private String nome;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne
     private Endereco endereco;
     @ManyToMany
-    @JsonIgnore
-    //não vai retornar esse atributo, vai ser ignorado
     private Set<Cliente> clientes;
+
+
+
 
 
 }

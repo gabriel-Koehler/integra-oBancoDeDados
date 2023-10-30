@@ -1,17 +1,16 @@
 package net.weg.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Set;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="tb_carro")
 public class Carro {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,10 +18,10 @@ public class Carro {
     private String marca;
     private String cor;
     private String modelo;
-    private Double preco;
+    private double preco;
     private Integer ano;
-    @OneToOne(mappedBy = "veiculo")
+    @OneToOne(mappedBy = "carro")
+    @JsonIgnore
     private Seguro seguro;
-
 
 }

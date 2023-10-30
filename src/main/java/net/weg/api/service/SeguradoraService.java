@@ -1,33 +1,37 @@
 package net.weg.api.service;
 
+
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import net.weg.api.model.Cliente;
 import net.weg.api.model.Seguradora;
 import net.weg.api.repository.SeguradoraRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.Optional;
 
-@Service
-@Data
-@NoArgsConstructor
 @AllArgsConstructor
-
+@Service
 public class SeguradoraService {
 
-    SeguradoraRepository seguradoraRepository;
-
-    public Collection<Seguradora> buscarTodos(){
-        return seguradoraRepository.findAll();
-    }
-
-    public Seguradora buscarUm(Integer id){
-        return seguradoraRepository.findById(id).get();
-    }
+    private SeguradoraRepository seguradoraRepository;
 
     public void salvar(Seguradora seguradora){
+
         seguradoraRepository.save(seguradora);
     }
 
+    public void deletar(Integer id) {
+        seguradoraRepository.deleteById(id);
+    }
+
+    public Seguradora buscarUm(Integer id) {
+        Optional<Seguradora> seguradoraOptional= seguradoraRepository.findById(id);
+        Seguradora seguradora= seguradoraOptional.get();
+        return seguradora;
+    }
+
+    public Collection<Seguradora> buscarTodos() {
+        return seguradoraRepository.findAll();
+    }
 }

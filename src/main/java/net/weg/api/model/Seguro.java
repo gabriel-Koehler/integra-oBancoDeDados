@@ -1,27 +1,44 @@
 package net.weg.api.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
-@AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "tb_seguro")
+@AllArgsConstructor
+@Entity
+@IdClass(SeguroidClass.class)
 public class Seguro {
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    private Integer id;
+
+    //Primeiro Exemplo de como criar uma chave composta
+//    @EmbeddedId
+//    private SeguroId id;
+
+    //Segundo exemplo de criar uma chave composta
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer seguroId;
+    @Id
+    private Integer seguradoraIdClass;
+
     private Double valor;
     private String nome;
     private String descricao;
     private Double valorFranquia;
     @ManyToOne
+//    @MapsId("seguradoraId")
+    @JoinColumn(name = "seguradoraIdClass")
     private Seguradora seguradora;
     @OneToOne
-    private Carro veiculo;
+    @JsonIgnore
+    private Carro carro;
     @ManyToOne
+    @JsonIgnore
     private Cliente cliente;
 }

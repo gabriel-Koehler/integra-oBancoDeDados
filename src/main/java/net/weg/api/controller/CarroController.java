@@ -1,41 +1,46 @@
 package net.weg.api.controller;
 
 import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import net.weg.api.model.Carro;
 import net.weg.api.service.CarroService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
-@AllArgsConstructor
+import java.util.List;
+
 @RestController
 @RequestMapping("/carro")
+@AllArgsConstructor
 public class CarroController {
 
-    private CarroService carroService;
 
-    @GetMapping("/{id}")
-    public Carro buscar(@PathVariable Integer id){
-        return carroService.buscar(id);
-    }
+        private CarroService carroService;
 
-    @GetMapping()
-    public Collection<Carro> buscarTodos(){
-        return carroService.buscarTodos();
-    }
+        @GetMapping("/{id}")
+        public Carro buscarUsuario(@PathVariable Integer id){
+            return carroService.buscarUm(id);
+        }
 
-    @DeleteMapping
-    public void deletar(@RequestParam Integer id){
-        carroService.deletar(id);
-    }
+        @GetMapping
+        public Collection<Carro> buscarTodos(){
+            return carroService.buscarTodos();
+        }
 
-    @PostMapping()
-    public void inserir(@RequestBody Carro carro){
-        carroService.salvar(carro);
-    }
+        @DeleteMapping("/{id}")
+        public void deletar(@PathVariable Integer id){
+            carroService.deletar(id);
+        }
 
-    @PutMapping()
-    public void atualizar(@RequestBody Carro carro){
-        carroService.salvar(carro);
-    }
+        @PostMapping
+        public void inserir(@RequestBody Carro carro){
+            carroService.salvar(carro);
+        }
+
+        @PutMapping
+        public void atualizar(@RequestBody Carro carroAtualizado){
+            carroService.salvar(carroAtualizado);
+        }
+
+        @GetMapping("/{modelo}")
+        public List<Carro> buscarmodelo(@PathVariable String modelo){return carroService.buscarModelo(modelo);}
 }
