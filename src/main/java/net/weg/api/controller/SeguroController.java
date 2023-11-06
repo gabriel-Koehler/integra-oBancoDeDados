@@ -2,6 +2,7 @@ package net.weg.api.controller;
 
 import lombok.AllArgsConstructor;
 import net.weg.api.model.Carro;
+import net.weg.api.model.DTO.SeguroCadastroDTO;
 import net.weg.api.model.Seguradora;
 import net.weg.api.model.Seguro;
 import net.weg.api.service.CarroService;
@@ -33,12 +34,12 @@ public class SeguroController {
     }
 
     @PostMapping
-    public void inserir(@RequestBody Seguro seguro){
-        seguroService.salvar(seguro);
+    public void inserir(@RequestBody SeguroCadastroDTO seguroCadastroDTO){
+        seguroService.salvar(seguroCadastroDTO);
     }
 
     @PutMapping
-    public void atualizar(@RequestBody Seguro seguroAtualizado){
+    public void atualizar(@RequestBody SeguroCadastroDTO seguroAtualizado){
         seguroService.salvar(seguroAtualizado);
     }
 }

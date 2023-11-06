@@ -53,13 +53,18 @@ public class CadastroSeguro extends FormLayout {
                                 carro.getValue(),
                                 cliente.getValue()
                         );
-                Seguro seguro=new Seguro();
-                seguroService.salvar(seguro);
+                try {
+                    seguroService.salvar(seguroCadastroDTO);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
                 dialog.close();
             }
         });
 
         Button cancelar = new Button("Cancelar", e -> dialog.close());
+
+        dialog.getFooter().add(cancelar,salvar);
 
         add(valor,valorFranquia,carro,seguradora,cliente,descricao);
 

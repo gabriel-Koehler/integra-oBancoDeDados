@@ -23,9 +23,9 @@ public class MeusSeguros extends VerticalLayout {
         hl.add(new H1("Meus Seguros"));
         Dialog cadastroSeguro =new Dialog();
         cadastroSeguro.add(new CadastroSeguro(seguradoraService,carroService,clienteService,cadastroSeguro,seguroService));
-        hl.add(new Button("Novo Seguro",e->cadastroSeguro.add()));
+        hl.add(new Button("Novo Seguro",e->cadastroSeguro.open()));
         add(hl);
-        Grid<Seguro> seguros= new Grid<>(seguroService.buscarTodos());
+        Grid<Seguro> seguros= new Grid<>(Seguro.class);
         add(seguros);
     }
 
