@@ -8,65 +8,54 @@ import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.select.Select;
 import com.vaadin.flow.component.textfield.NumberField;
 import com.vaadin.flow.component.textfield.TextField;
-import net.weg.api.model.Carro;
-import net.weg.api.model.Cliente;
-import net.weg.api.model.DTO.CarroCadastroDTO;
-import net.weg.api.model.DTO.SeguroCadastroDTO;
-import net.weg.api.model.Seguradora;
-import net.weg.api.model.Seguro;
+import net.weg.api.model.dto.SeguroCadastroDTO;
+import net.weg.api.model.entity.Carro;
+import net.weg.api.model.entity.Cliente;
+import net.weg.api.model.entity.Seguradora;
 import net.weg.api.service.CarroService;
-import net.weg.api.service.ClienteService;
 import net.weg.api.service.SeguradoraService;
 import net.weg.api.service.SeguroService;
-import org.springframework.beans.BeanUtils;
+import net.weg.api.service.UsuarioService;
 
-public class CadastroSeguro extends FormLayout {
+public class CadastroSeguro extends Dialog {
+
+    private NumberField valor = new NumberField("Valor");
+    private TextField descricao = new TextField("Descrição");
+    private NumberField valorFranquia = new NumberField("Valor da Franquia");
+    private Select<Seguradora> seguradoraSelect = new Select<>();
+    private Select<Carro> veiculoSelect = new Select<>();
+    private Select<Cliente> usuarioSelect = new Select<>();
+
+    private FormLayout formLayout = new FormLayout();
+
     private SeguroService seguroService;
-    CadastroSeguro(SeguradoraService seguradoraService,
-                   CarroService carroService,
-                   ClienteService clienteService,
-                   Dialog dialog,
-                   SeguroService seguroService) {
-        this.seguroService=seguroService;
-        NumberField valor= new NumberField("Valor");
-        TextField descricao= new TextField("Descrição");
-        NumberField valorFranquia=new NumberField("Valor da Franquia");
-        Select<Seguradora> seguradora=new Select<>();
-        seguradora.setLabel("Seguradora");
-        seguradora.setItems(seguradoraService.buscarTodos());
-        Select<Carro> carro=new Select<>();
-        carro.setLabel("Carro");
-        carro.setItems(carroService.buscarTodos());
-        Select<Cliente> cliente=new Select<>();
-        cliente.setLabel("Cliente");
-        cliente.setItems(clienteService.buscarTodos());
+
+    CadastroSeguro(SeguradoraService seguradoraService, CarroService carroService, UsuarioService usuarioService
+    ,SeguroService seguroService){
+        this.seguroService = seguroService;
+        seguradoraSelect.setLabel("Seguradora");
+        seguradoraSelect.setItems(seguradoraService.buscarTodos());
+        veiculoSelect.setLabel("Veículo");
+        veiculoSelect.setItems(carroService.buscarTodos());
+//        usuarioSelect.setItemLabelGenerator(item -> toString());
+        usuarioSelect.setLabel("Usuário");
+        usuarioSelect.setItems(usuarioService.buscarTodos());
         Button salvar = new Button("Salvar", new ComponentEventListener<ClickEvent<Button>>() {
             @Override
             public void onComponentEvent(ClickEvent<Button> buttonClickEvent) {
-
-                SeguroCadastroDTO seguroCadastroDTO=
-                        new SeguroCadastroDTO(
-                                valor.getValue(),
-                                descricao.getValue(),
-                                valorFranquia.getValue(),
-                                seguradora.getValue(),
-                                carro.getValue(),
-                                cliente.getValue()
-                        );
+                SeguroCadastroDTO seguroCadastroDTO = new SeguroCadastroDTO(valor.getValue(),descricao.getValue(),valorFranquia.getValue(),seguradoraSelect.getValue()
+                        ,veiculoSelect.getValue(),usuarioSelect.getValue());
                 try {
                     seguroService.salvar(seguroCadastroDTO);
-                } catch (Exception e) {
+                }catch (Exception e){
                     throw new RuntimeException(e);
                 }
-                dialog.close();
+                  close();
             }
         });
-
-        Button cancelar = new Button("Cancelar", e -> dialog.close());
-
-        dialog.getFooter().add(cancelar,salvar);
-
-        add(valor,valorFranquia,carro,seguradora,cliente,descricao);
-
+        Button cancelar = new Button("Cancelar", e -> this.close());
+        this.getFooter().add(cancelar, salvar);
+        formLayout.add(valor,descricao,valorFranquia,veiculoSelect,seguradoraSelect,usuarioSelect);
+        add(formLayout);
     }
 }

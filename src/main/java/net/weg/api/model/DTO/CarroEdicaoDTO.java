@@ -7,13 +7,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CarroCadastroDTO implements  IDTO{
+public class CarroEdicaoDTO implements  IDTO{
 
+    private int id;
     private String placa;
     private String marca;
     private String cor;
     private String modelo;
     private Double preco;
     private Integer ano;
-
 }

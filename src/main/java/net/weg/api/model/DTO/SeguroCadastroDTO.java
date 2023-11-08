@@ -1,26 +1,18 @@
-package net.weg.api.model.DTO;
+package net.weg.api.model.dto;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import net.weg.api.model.Carro;
-import net.weg.api.model.Cliente;
-import net.weg.api.model.Seguradora;
+import net.weg.api.model.entity.Carro;
+import net.weg.api.model.entity.Cliente;
+import net.weg.api.model.entity.Seguradora;
 
-@Data
 @AllArgsConstructor
-
-public class SeguroCadastroDTO {
-
+@Data
+public class SeguroCadastroDTO implements  IDTO{
     private Double valor;
     private String descricao;
     private Double valorFranquia;
     private Seguradora seguradora;
-    private Carro carro;
+    private Carro veiculo;
     private Cliente cliente;
 }

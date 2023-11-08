@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
@@ -36,7 +37,7 @@ public class Seguro {
     @JoinColumn(name = "seguradoraIdClass")
     private Seguradora seguradora;
     @OneToOne
-    @JsonIgnore
+    @EqualsAndHashCode.Exclude
     private Carro carro;
     @ManyToOne
     @JsonIgnore

@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -13,7 +14,7 @@ import java.util.Set;
 public class Cliente extends Usuario{
 
     @OneToMany(cascade = CascadeType.PERSIST)
-    private Set<Carro> carros;
+    private Set<Carro> carros=new HashSet<>();
     @ManyToMany(cascade = CascadeType.PERSIST)
     private Set<Endereco> endereco;
     @OneToOne(cascade = CascadeType.PERSIST)
